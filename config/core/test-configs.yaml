@@ -302,6 +302,9 @@ test_plans:
     params:
       sleep_params: mem
 
+  uname:
+    rootfs: debian_buster_nfs
+
   usb:
     rootfs: debian_buster_ramdisk
 
@@ -1915,6 +1918,7 @@ test_configs:
       - ltp-mm
       - ltp-pty
       - ltp-timers
+      - uname
       - sleep
 
   - device_type: hp-x360-12b-n4000-octopus
@@ -2159,6 +2163,7 @@ test_configs:
     test_plans:
       - baseline
       - baseline-nfs
+      - uname
 
   - device_type: minnowboard-turbot-E3826
     test_plans:
