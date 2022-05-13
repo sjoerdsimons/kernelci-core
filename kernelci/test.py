@@ -73,7 +73,7 @@ def match_configs(configs, meta, lab):
     return match
 
 
-def get_params(meta, target, plan_config, storage, device_ids):
+def get_params(meta, target, plan_config, storage, device_id):
     """Get a dictionary with all the test parameters to run a test job
 
     *meta* is a MetaStep object
@@ -175,6 +175,6 @@ def get_params(meta, target, plan_config, storage, device_ids):
 
     params.update(plan_config.params)
     params.update(target.params)
-    params.update({'device_ids': device_ids})
+    params.update({'device_id': device_id})
 
     return params
