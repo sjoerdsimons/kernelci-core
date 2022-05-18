@@ -2,6 +2,7 @@
 set -e
 BOARD=$1
 BRANCH=$2
+SERIAL=$3
 DATA_DIR=$(pwd)
 USERNAME=$(/usr/bin/id -run)
 
@@ -44,11 +45,11 @@ sed -i s,'use fuzzer || die',"#use fuzzer || die", src/third_party/chromiumos-ov
 fi
 
 # Add serial support
-echo Add serial support
+echo Add serial ${SERIAL} support
 cros_sdk USE=pcserial build_packages --board=${BOARD}
-cros_sdk USE="tty_console_ttyS0" emerge-"${BOARD}" chromeos-base/tty
-echo Building image
-cros_sdk ./build_image --enable_serial ttyS0 --board="${BOARD}" --boot_args "earlyprintk=serial,keep console=tty0" --noenable_rootfs_verification test
+cros_sdk USE="tty_console_${SERIAL}" emerge-"${BOARD}" chromeos-base/tty
+echo Building image (${SERIAL})
+cros_sdk ./build_image --enable_serial ${SERIAL} --board="${BOARD}" --boot_args "earlyprintk=serial,keep console=tty0" --noenable_rootfs_verification test
 
 echo Moving artifacts
 # Create artifacts dir and copy generated image and tast files
