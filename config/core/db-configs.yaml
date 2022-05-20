@@ -1,5 +1,9 @@
 db_configs:
 
+  api:
+    db_type: kernelci_api
+    url: http://localhost:8001/
+
   chromeos.kernelci.org:
     db_type: kernelci_backend
     url: https://api.chromeos.kernelci.org/
