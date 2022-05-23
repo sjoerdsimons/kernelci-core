@@ -11,8 +11,8 @@ test_plans:
       <<: *chromeos-boot-params
       fixed_kernel: true
 
-  chromeos-flash:
-    pattern: 'chromeos/chromeos-flash-template.jinja2'
+  cros-flash:
+    pattern: 'chromeos/cros-flash.jinja2'
     params:
       job_timeout: '60'
       docker_image: 'kernelci/chromeos-flash'
