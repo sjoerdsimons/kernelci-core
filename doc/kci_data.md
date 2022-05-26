@@ -124,3 +124,30 @@ The example above was run with `--db-config=staging.kernelci.org` which implies
 having an API token for the KernelCI staging API.  This was useful to be able
 to show the results on the web dashboard.  The same command can be run with a
 local instance using `--db-config=localhost`.
+
+## Creating user
+
+We can create new users of KernelCI-API using `kci-data`.
+
+We need to provide API token to access `/user` endpoint of API.
+For security purpose, instead of providing `--db-token` from the comman line we can add `db_token` in settings file i.e. `kernelci.conf`.
+
+```
+[db:api]
+
+db_token: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+```
+
+Command to create a regular user would be:
+
+```
+./kci_data create_user --username test --password test --db-config api
+{'_id': '628c81e641616ced4e31a10b', 'username': 'test', 'hashed_password': '$2b$12$Ev72ythf0jViigUOtHuifOW6Mtrr0RmwQx0zO1CIy5XMwrN57bhuW', 'active': True, 'is_admin': False}
+```
+
+Command to create a superuser would be:
+
+```
+./kci_data create_user --username admin --password admin --db-config api --is-admin 1
+{'_id': '628c81f541616ced4e31a10c', 'username': 'admin', 'hashed_password': '$2b$12$BZ/doNFOHlOnMKXDbVXHluviZf4yneB62O8H5uCiPaKRBO4YrKmZO', 'active': True, 'is_admin': True}
+```
