@@ -57,6 +57,11 @@ build_configs:
     branch: 'linux-5.10.y'
     variants: *chromeos-variants
 
+  chromeos-stable_5.15:
+    tree: stable
+    branch: 'linux-5.15.y'
+    variants: *chromeos-variants
+
   kernelci_chromeos-stable:
     tree: kernelci
     branch: 'chromeos-stable'
