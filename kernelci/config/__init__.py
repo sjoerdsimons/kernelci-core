@@ -26,6 +26,7 @@ import kernelci.config.db
 import kernelci.config.lab
 import kernelci.config.rootfs
 import kernelci.config.test
+import kernelci.config.email
 
 
 def _iterate_yaml_files(config_path):
@@ -93,6 +94,7 @@ def from_data(data):
     config.update(kernelci.config.lab.from_yaml(data, filters))
     config.update(kernelci.config.rootfs.from_yaml(data, filters))
     config.update(kernelci.config.test.from_yaml(data, filters))
+    config.update(kernelci.config.email.from_yaml(data))
     return config
 
 
