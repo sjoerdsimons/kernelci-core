@@ -57,6 +57,17 @@ class KernelCI_API(Database):
         resp.raise_for_status()
         return resp
 
+    def create_user(self, username, password, is_admin):
+        """Create new user"""
+        path = '/'.join(['user', username])
+        if is_admin:
+            path = '?'.join([path, 'is_admin='+str(is_admin)])
+
+        data = {'password': password}
+        resp = self._post(path, json.dumps(data))
+        print(resp.json())
+        return resp.json()
+
     def subscribe(self, channel):
         resp = self._post(f'subscribe/{channel}')
         return json.loads(resp.text)['id']
