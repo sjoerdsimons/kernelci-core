@@ -22,3 +22,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libyaml-dev \
     pkg-config \
     python3-yaml
+
+RUN pip3 install --system yamllint
