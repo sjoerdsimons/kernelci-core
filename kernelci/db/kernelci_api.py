@@ -103,6 +103,11 @@ class KernelCI_API(Database):
         resp = self._get('/'.join(['get_root_node', node_id]))
         return json.loads(resp.text)
 
+    def get_completed_event(self, node_id):
+        """Get an event when all child nodes are complete of a given node"""
+        resp = self._get('/'.join(['trigger_completed_event', node_id]))
+        return resp.json()
+
     def pubsub_event_filter(self, sub_id, event):
         """Filter Pub/Sub events
 
