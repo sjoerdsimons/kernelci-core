@@ -151,6 +151,20 @@ class KernelCI_API(Database):
                                                                 event.data]):
                 return node
 
+    def receive_nodes(self, sub_id):
+        """
+        Listen to all the events on 'node' channel and apply filter on it.
+        Return node and child nodes if event matches with the filter.
+        """
+        while True:
+            event = self.get_event(sub_id)
+            if all(self.pubsub_event_filter(sub_id, obj) for obj in [
+                                                                node,
+                                                                event.data]):
+                node = self.get_node_from_event(event)
+                child_nodes = self.get_child_nodes_from_event(event)
+                return node, child_nodes
+
     def submit(self, data, verbose=False):
         obj_list = []
         for path, item in data.items():
