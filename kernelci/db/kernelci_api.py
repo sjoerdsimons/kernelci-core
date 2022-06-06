@@ -114,6 +114,16 @@ class KernelCI_API(Database):
         resp = self._get('/'.join(['get_root_node', node_id]))
         return json.loads(resp.text)
 
+    def get_completed_event(self, node_id, hours=0, minutes=0, seconds=0):
+        """Get an event when all child nodes are complete of a given node"""
+        resp = self._get(f'trigger_completed_event/{node_id}?wait_time_hours=\
+{hours}&wait_time_minutes={minutes}&wait_time_seconds={seconds}')
+        return resp.json()
+
+    def get_child_nodes_from_event(self, event):
+        """Get child nodes from 'completed' event"""
+        return self.get_node(event.data['nodes'])
+
     def pubsub_event_filter(self, sub_id, event):
         """Filter Pub/Sub events
 
@@ -151,6 +161,20 @@ class KernelCI_API(Database):
                                                                 node,
                                                                 event.data]):
                 return node
+
+    def receive_nodes(self, sub_id):
+        """
+        Listen to all the events on 'node' channel and apply filter on it.
+        Return node and child nodes if event matches with the filter.
+        """
+        while True:
+            event = self.get_event(sub_id)
+            if all(self.pubsub_event_filter(sub_id, obj) for obj in [
+                                                                node,
+                                                                event.data]):
+                node = self.get_node_from_event(event)
+                child_nodes = self.get_child_nodes_from_event(event)
+                return node, child_nodes
 
     def submit(self, data, verbose=False):
         obj_list = []
